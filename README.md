@@ -1,9 +1,9 @@
 # Overview
-This is the code implementation of the random renormalization group presented in the paper entitled as "Fast renormalizing the structures and dynamics of ultra-large systems via random renormalization group". 
+This is the code implementation of the random renormalization group presented in the paper entitled as "Random renormalization group for fast renormalizing ultra-large complex systems". 
 
 The abstract of this paper is shown below:
 
-Criticality and symmetry, studied by the renormalization groups, lie at the heart of modern physics theories of matters and complex systems. However, surveying these properties with massive experimental data is bottlenecked by the intolerable costs of computing renormalization groups on real systems. Here, we develop a time- and memory-efficient framework, termed as the random renormalization group, for renormalizing ultra-large systems (e.g., with millions of units) within minutes. This framework is based on random projections, hashing techniques, and kernel representations, which support the renormalization governed by linear and non-linear correlations. For system structures, it exploits the correlations among local topology in kernel spaces to unfold the connectivity of units, identify intrinsic system scales, and verify the existences of symmetries under scale transformation. For system dynamics, it renormalizes units into correlated clusters to analyze scaling behaviours, validate scaling relations, and investigate potential criticality. Benefiting from hashing-function-based designs, our framework significantly reduces computational complexity compared with classic renormalization groups, realizing a single-step acceleration of two orders of magnitude. Meanwhile, the efficient representation of different kinds of correlations in kernel spaces realized by random projections ensures the capacity of our framework to capture diverse unit relations. As shown by our experiments, the random renormalization group helps identify non-equilibrium phase transitions, criticality, and symmetry in diverse large-scale genetic, neural, material, social, and cosmological systems.
+Criticality and symmetry, fundamental concepts in modern physics theories of matter, are typically studied using the renormalization group (RG) method. However, computational costs limit the application of RG to large-scale datasets. Here we present the random renormalization group (RRG), an efficient framework that analyzes dynamics and structures in ultra-large systems (millions of units) within minutes. The RRG combines random projections, hashing techniques, and kernel representations to capture both linear and nonlinear correlations. For structural analysis, it identifies connectivity patterns, intrinsic scales, and symmetries through local topology correlations in kernel spaces. For dynamical analysis, it groups units into correlated clusters to study scaling behaviors and critical phenomena. Our experiments demonstrate the computational efficiency of the RRG, which achieves at least two orders of magnitude speedup while successfully identifying non-equilibrium phase transitions, criticality, and symmetries across diverse complex systems.
 
 Two Jupyter notebook files are released as the instances of applying the random renormalization group on dynamics and structure renormalization. The full descriptions of all functions in this files can be seen in the attached PDF file, which is the supplementary material of the paper.
 
@@ -31,7 +31,11 @@ statsmodels
 
 # Installation guide:
 ```python
-git clone https://github.com/Asuka-Research-Group/Random-renormalization-group
+git clone https://github.com/doloMing/Random-renormalization-group
+```
+
+```python
+pip install random-renormalization-group
 ```
 
 # Basic instances:
@@ -44,6 +48,17 @@ RG_Flow,Tracked_ID_list=Renormalization_Flow(X_Initial,100,50,"Linear_Kernel","S
 RG_Flow,Tracked_ID_list=Renormalization_Flow(X_Initial,50,10,"Gaussian_Kernel","Structure") # Run a RRG for 50 iterations, where the dimension of hased binary vectors is 10
 
 RG_Flow,Tracked_ID_list=Renormalization_Flow(X_Initial,200,100,"Cauchy_Kernel","Structure") # Run a RRG for 200 iterations, where the dimension of hased binary vectors is 100
+
+# Generate a random tree with 10000 units, and assign the weights by a power-law distribution
+tree = nx.random_tree(10000)
+nx.set_edge_attributes(tree, 1, 'number')
+size = tree.number_of_edges() 
+alpha = 2.0
+weights = np.random.pareto(alpha, size) + 1
+for i, (u, v) in enumerate(tree.edges()):
+    tree[u][v]['weight'] = weights[i]
+
+RG_Flow,Tracked_ID_list=Renormalization_Flow(tree,200,100,"Cauchy_Kernel","Structure",Weighted=True) # Run a RRG for 200 iterations, where the dimension of hased binary vectors is 100 and weight information is considered
 
 ## Dynamics renormalization
 X_Initial = np.random.randn(10000, 50000) # Generate a system with 10000 units, where each unit exhibits random dynamics for 50000 time steps
