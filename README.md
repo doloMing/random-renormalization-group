@@ -5,7 +5,8 @@ The abstract of this paper is shown below:
 
 Criticality and symmetry, fundamental concepts in modern physics theories of matter, are typically studied using the renormalization group (RG) method. However, computational costs limit the application of RG to large-scale datasets. Here we present the random renormalization group (RRG), an efficient framework that analyzes dynamics and structures in ultra-large systems (millions of units) within minutes. The RRG combines random projections, hashing techniques, and kernel representations to capture both linear and nonlinear correlations. For structural analysis, it identifies connectivity patterns, intrinsic scales, and symmetries through local topology correlations in kernel spaces. For dynamical analysis, it groups units into correlated clusters to study scaling behaviors and critical phenomena. Our experiments demonstrate the computational efficiency of the RRG, which achieves at least two orders of magnitude speedup while successfully identifying non-equilibrium phase transitions, criticality, and symmetries across diverse complex systems.
 
-Two Jupyter notebook files are released as the instances of applying the random renormalization group on dynamics and structure renormalization. The full descriptions of all functions in this files can be seen in the attached PDF file, which is the supplementary material of the paper.
+Two Jupyter notebook files are released as the instances of applying the random renormalization group on dynamics and structure renormalization. The full descriptions of all functions in this files can be seen in the attached PDF file, which is the supplementary material of the paper. 
+
 
 # Instructions
 The notebook files can be run directly over simulated data.  To run the codes with real data, one only needs to change the input of the function Renormalization_Flow. We refer to “Fast_renormalizing_the_structures_and_dynamics_of_ultra_large_systems_via_random_renormalization_group_SM_.pdf” for detailed descriptions and usages of other functions.
@@ -30,10 +31,12 @@ statsmodels
 ```
 
 # Installation guide:
+You can simply git clone this library
 ```python
 git clone https://github.com/doloMing/Random-renormalization-group
 ```
 
+If the PyPI is used, one can easily install the library of the RRG via
 ```python
 pip install random-renormalization-group
 ```
